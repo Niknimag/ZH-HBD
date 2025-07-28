@@ -3,6 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <h2>There’s a bit of a wait until your birthday 🕐</h2>
+<p id="countdown" style="font-size: 20px; color: #ff69b4;"></p>
+
+<script>
+  const birthday = new Date(Date.now() + 5 * 1000);
+  const countdownEl = document.getElementById("countdown");
+
+  function updateCountdown() {
+    const now = new Date();
+    const diff = birthday - now;
+
+    if (diff <= 0) {
+      countdownEl.textContent = "🎉 今天是生日！快抱抱！";
+      clearInterval(timer);
+    } else {
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      countdownEl.textContent = `${days} 天 ${hours} 小时 ${minutes} 分 ${seconds} 秒`;
+    }
+  }
+
+  updateCountdown();
+  const timer = setInterval(updateCountdown, 1000);
+</script>
+
   <title>Happy Birthday!</title>
   <style>
     body {
