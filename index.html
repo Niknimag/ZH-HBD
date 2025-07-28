@@ -48,4 +48,15 @@
   <h1>🎂 Happy Birthday🎂 Zhe Huang！🥳🎉</h1>
   <p>May the all of happiness and fortune be with you💗💰</p>
 </body>
+  <h2>What’s on your mind?🤔💭💬</h2>
+<input id="message" type="text" placeholder="Tell me whatever comes to mind...">
+<button onclick="showMessage()">Send</button>
+<p id="output"></p>
+
+<script>
+  function showMessage() {
+    const msg = document.getElementById('message').value;
+    document.getElementById('output').innerText = `He says：“${msg}”`;
+  }
+</script>
 </html>
