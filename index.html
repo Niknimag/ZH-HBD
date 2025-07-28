@@ -21,7 +21,31 @@
   </style>
 </head>
 <body>
-  <h1>🎂 Happy Birthday, Zhe Huang！🥳🎂🎉</h1>
+  <style>
+  .heart {
+    position: absolute;
+    font-size: 30px;
+    animation: floatUp 6s infinite ease-in;
+    color: red;
+  }
+  @keyframes floatUp {
+    0% { top: 100%; opacity: 0; }
+    30% { opacity: 1; }
+    100% { top: -10%; opacity: 0; }
+  }
+</style>
+
+<script>
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.textContent = "💖";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+  }, 800);
+</script>
+  <h1>🎂 Happy Birthday🎂 Zhe Huang！🥳🎉</h1>
   <p>May the all of happiness and fortune be with you💗💰</p>
 </body>
 </html>
