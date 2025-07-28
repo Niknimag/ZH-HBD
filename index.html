@@ -38,6 +38,15 @@
       box-sizing: border-box;
     }
 
+    #message {
+  border-radius: 12px;
+  border: 2px solid #ffc2e2;
+  padding: 12px;
+  font-size: 16px;
+  background-color: #fffafc;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
     button {
       margin-top: 12px;
       padding: 8px 16px;
@@ -53,6 +62,11 @@
       background-color: #ff85c1;
     }
 
+    .title {
+  font-size: 6vw;          /* 根据屏幕宽度自动调整字体大小 */
+  white-space: nowrap;     /* 强制整句不换行 */
+}
+
     .heart {
       position: absolute;
       font-size: 30px;
@@ -60,6 +74,11 @@
       color: red;
     }
 
+    .title {
+  font-size: 6vw;
+  white-space: nowrap;
+}
+    
     @keyframes floatUp {
       0% { top: 100%; opacity: 0; }
       30% { opacity: 1; }
