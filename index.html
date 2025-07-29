@@ -67,6 +67,21 @@
       30% { opacity: 1; }
       100% { top: -10%; opacity: 0; }
     }
+.danmaku {
+  position: absolute;
+  white-space: nowrap;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ff69b4;
+  animation: danmakuMove 8s linear forwards;
+  top: calc(30px + (Math.random() * 200px)); /* 随机高度，可调整范围 */
+}
+
+@keyframes danmakuMove {
+  0% { left: 100%; opacity: 1; }
+  90% { opacity: 1; }
+  100% { left: -100%; opacity: 0; }
+}
 
     /* 图片动画样式 */
     .flash-photo {
@@ -159,11 +174,30 @@
   <button onclick="showMessage()">Send</button>
   <p id="output"></p>
 
-  <script>
-    function showMessage() {
-      const msg = document.getElementById('message').value;
-      document.getElementById('output').innerText = `He says: “${msg}”`;
-    }
-  </script>
+<script>
+  function showMessage() {
+    const msg = document.getElementById('message').value;
+    const outputEl = document.getElementById('output');
+
+    // 留言记录在页面下方
+    const newMsg = document.createElement('p');
+    newMsg.textContent = `He says: “${msg}”`;
+    newMsg.style.color = '#333';
+    newMsg.style.fontSize = '18px';
+    newMsg.style.margin = '6px 0';
+    outputEl.appendChild(newMsg);
+
+    // 弹幕效果
+    const danmaku = document.createElement('div');
+    danmaku.className = 'danmaku';
+    danmaku.textContent = msg;
+    danmaku.style.top = Math.random() * 400 + 'px'; // 随机高度
+    document.body.appendChild(danmaku);
+
+    setTimeout(() => danmaku.remove(), 8000); // 动画完成后删除
+    document.getElementById('message').value = ''; // 清空输入框
+  }
+</script>
+
 </body>
 </html>
