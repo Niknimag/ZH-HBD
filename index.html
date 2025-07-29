@@ -87,41 +87,32 @@
 
     /* 图片动画样式 */
     .flash-photo {
-      position: absolute;
-      top: 120px;
-      left: 50%;
-      transform: translate(-50%);
-      width: 200px;
-      height: auto;
-      opacity: 0;
-      animation: flashTiny 2s ease-out forwards;
-      animation-delay: 1s;
-      z-index: 999;
-    }
+  display: block;
+  margin: 30px auto;
+  width: 250px; /* 自行调整大小 */
+  height: auto;
+  opacity: 0;
+  animation: flashTiny 2s ease-out forwards;
+  animation-delay: 1s;
+}
 
     @keyframes flashTiny {
       0% {
         opacity: 0;
-        transform: translate(-50%, -50%) scale(0.9);
+        transform: scale(0.7);
       }
       40% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1.05);
+        transform:  scale(1.15);
       }
       100% {
         opacity: 1;
-        transform: translate(-50%, -50%) scale(1);
+        transform: scale(1);
       }
     }
   </style>
 </head>
 <body>
-  <!-- 图片闪现 -->
-  <img src="images/FD5232AC-1FB1-4E52-9BD3-A110E1C9FCBC_1_105_c.jpeg" alt="Surprise" class="flash-photo">
-
-  <!-- 空白区域，为图片腾位置 -->
-  <div style="height: 180px;"></div>
-
   <!-- 倒数显示 -->
   <h2>Countdown to Birthday 🕐</h2>
   <p id="countdown" style="font-size: 20px; color: #ff69b4;"></p>
@@ -165,6 +156,12 @@
   <h1>🎂 Happy Birthday 🎉<br>💖 Zhe Huang! 🥳</h1>
   <p>May all of happiness and fortune be with you 💗💰</p>
 
+   <!-- 图片闪现 -->
+  <img src="images/FD5232AC-1FB1-4E52-9BD3-A110E1C9FCBC_1_105_c.jpeg" alt="Surprise" class="flash-photo">
+
+  <!-- 空白区域，为图片腾位置 -->
+  <div style="height: 180px;"></div>
+  
   <!-- 音乐播放按钮 -->
   <button onclick="document.getElementById('bgm').play()">🎵 Play Birthday Music</button>
   <audio id="bgm" src="https://github.com/Niknimag/index.html/blob/main/September.mp3?raw=true" loop></audio>
