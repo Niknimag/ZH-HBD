@@ -77,6 +77,27 @@
       30% { opacity: 1; }
       100% { top: -10%; opacity: 0; }
     }
+.flash-photo {
+  opacity: 0;
+  animation: flashIn 2s ease-out forwards;
+  animation-delay: 1s;
+}
+
+@keyframes flashIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+    
   </style>
 </head>
 <body>
@@ -121,7 +142,7 @@
 
   <p>May the all of happiness and fortune be with you 💗💰</p>
 
-  <img src="images/6AC4207A-EDC8-49C6-8A66-9356B2F5AC6D.jpeg" alt="Birthday Moment" width="350">
+  <img src="images/6AC4207A-EDC8-49C6-8A66-9356B2F5AC6D.jpeg" alt="Surprise" class="flash-photo">
 
 <!-- Music Play Button -->
   <button onclick="document.getElementById('bgm').play()">🎵 Play Birthday Music</button>
