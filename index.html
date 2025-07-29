@@ -68,20 +68,22 @@
       100% { top: -10%; opacity: 0; }
     }
 .danmaku {
-  position: absolute;
+  position: fixed;
+  top: 0;
+  left: 100%;
   white-space: nowrap;
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bold;
   color: #ff69b4;
   animation: danmakuMove 8s linear forwards;
-  top: calc(30px + (Math.random() * 200px)); /* 随机高度，可调整范围 */
+  z-index: 1000;
 }
 
 @keyframes danmakuMove {
-  0% { left: 100%; opacity: 1; }
-  90% { opacity: 1; }
-  100% { left: -100%; opacity: 0; }
+  0% { left: 100%; top: var(--top); opacity: 1; }
+  100% { left: -100%; top: var(--top); opacity: 0.3; }
 }
+
 
     /* 图片动画样式 */
     .flash-photo {
@@ -179,7 +181,19 @@
     const msg = document.getElementById('message').value;
     const outputEl = document.getElementById('output');
 
-    // 留言记录在页面下方
+    // 创建弹幕元素
+    const danmaku = document.createElement('div');
+    danmaku.className = 'danmaku';
+    danmaku.textContent = msg;
+    
+    // 随机高度并使用 CSS 变量控制 top
+    const topOffset = Math.floor(Math.random() * 400) + 50; // 避免太顶或太底
+    danmaku.style.setProperty('--top', topOffset + 'px');
+
+    document.body.appendChild(danmaku);
+    setTimeout(() => danmaku.remove(), 8000); // 动画结束移除
+
+    // 保留留言在页面下方
     const newMsg = document.createElement('p');
     newMsg.textContent = `He says: “${msg}”`;
     newMsg.style.color = '#333';
@@ -187,15 +201,7 @@
     newMsg.style.margin = '6px 0';
     outputEl.appendChild(newMsg);
 
-    // 弹幕效果
-    const danmaku = document.createElement('div');
-    danmaku.className = 'danmaku';
-    danmaku.textContent = msg;
-    danmaku.style.top = Math.random() * 400 + 'px'; // 随机高度
-    document.body.appendChild(danmaku);
-
-    setTimeout(() => danmaku.remove(), 8000); // 动画完成后删除
-    document.getElementById('message').value = ''; // 清空输入框
+    document.getElementById('message').value = '';
   }
 </script>
 
