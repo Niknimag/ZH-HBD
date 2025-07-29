@@ -78,14 +78,33 @@
       100% { top: -10%; opacity: 0; }
     }
 .flash-photo {
-  width: 50vw; /* 设置图片宽度为视窗宽度的 50%，可调成 30vw / 40vw 看效果 */
-  max-width: 300px; /* 设置最大宽度，避免太大 */
-  display: block;
-  margin: 0 auto; /* 让图片水平居中 */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100px;       
+  height: auto;
   opacity: 0;
-  animation: flashIn 1.2s ease-out forwards;
+  animation: flashTiny 2s ease-out forwards;
   animation-delay: 1s;
+  z-index: 999;      
 }
+
+@keyframes flashTiny {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  40% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
 
 @keyframes flashIn {
   0% {
