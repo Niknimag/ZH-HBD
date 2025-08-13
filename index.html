@@ -172,11 +172,16 @@
   <button onclick="showMessage()">Send</button>
   <div id="output"></div>
 
- <script>
+<script>
   function showMessage() {
-    const name = document.getElementById('sender').value;
-    const msg = document.getElementById('message').value;
+    const name = document.getElementById('sender').value.trim();
+    const msg = document.getElementById('message').value.trim();
     const outputEl = document.getElementById('output');
+
+    if (!name || !msg) {
+      alert("Please enter your name and message.");
+      return;
+    }
 
     // 页面显示留言
     const newMsg = document.createElement('p');
@@ -186,46 +191,30 @@
     newMsg.style.margin = '6px 0';
     outputEl.appendChild(newMsg);
 
-    // 创建弹幕元素
+    // 弹幕效果
     const danmaku = document.createElement('div');
-danmaku.className = 'danmaku';
-danmaku.textContent = `${name}: ${msg}`;
-const topOffset = Math.floor(Math.random() * 400) + 50;
-danmaku.style.setProperty('--top', topOffset + 'px');
-document.body.appendChild(danmaku);
-setTimeout(() => danmaku.remove(), 8000);
-    
-    // 随机高度并使用 CSS 变量控制 top
-    const topOffset = Math.floor(Math.random() * 400) + 50; // 避免太顶或太底
+    danmaku.className = 'danmaku';
+    danmaku.textContent = `${name}: ${msg}`;
+    const topOffset = Math.floor(Math.random() * 400) + 50;
     danmaku.style.setProperty('--top', topOffset + 'px');
-
     document.body.appendChild(danmaku);
-    setTimeout(() => danmaku.remove(), 8000); // 动画结束移除
+    setTimeout(() => danmaku.remove(), 8000);
 
-    // 保留留言在页面下方
-    const newMsg = document.createElement('p');
-    newMsg.textContent = `😽: “${msg}”`;
-    newMsg.style.color = '#333';
-    newMsg.style.fontSize = '18px';
-    newMsg.style.margin = '6px 0';
-    outputEl.appendChild(newMsg);
+   // 发送到邮箱
+    emailjs.send("bdtest", "testing1", {
+      sender_name: name,
+      message: msg
+    }).then(function(response) {
+      alert("✅ Message sent to your inbox!");
+    }, function(error) {
+      console.error("Email failed:", error);
+      alert("❌ Failed to send message.");
+    });
 
+    document.getElementById('sender').value = '';
     document.getElementById('message').value = '';
-
-    // 发送到邮箱
-      emailjs.send("bdtest", "testing1", {
-        sender_name: name,
-        message: msg
-      }).then(function(response) {
-        alert("✅ Message sent to your inbox!");
-      }, function(error) {
-        alert("❌ Failed to send message.");
-      });
-
-      document.getElementById('sender').value = '';
-      document.getElementById('message').value = '';
-    }
+  }
 </script>
-
+  
 </body>
 </html>
