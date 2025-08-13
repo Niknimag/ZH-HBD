@@ -76,7 +76,6 @@
       white-space: nowrap;
       font-size: 22px;
       font-weight: bold;
-      color: #ff69b4;
       animation: danmakuMove 8s linear forwards;
       z-index: 1000;
     }
@@ -102,13 +101,6 @@
       100% { opacity: 1; transform: scale(1); }
     }
   </style>
-
-  <!-- ✅ EmailJS 脚本和初始化 -->
- <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
-<script>
-  emailjs.init("PZQM-HDHh08bl5CUe");
-</script>
-
 </head>
 <body>
 
@@ -172,6 +164,22 @@
   <div id="output"></div>
 
   <script>
+    const colors = ['#ff69b4', '#ff85c1', '#ffa07a', '#f08080', '#ffb6c1', '#db7093', '#ff6347', '#ff4500', '#ff1493'];
+
+    // 页面加载时显示历史留言
+    window.addEventListener("DOMContentLoaded", () => {
+      const outputEl = document.getElementById('output');
+      const messages = JSON.parse(localStorage.getItem("messages") || "[]");
+      messages.forEach(msg => {
+        const p = document.createElement('p');
+        p.textContent = msg;
+        p.style.color = colors[Math.floor(Math.random() * colors.length)];
+        p.style.fontSize = '18px';
+        p.style.margin = '6px 0';
+        outputEl.appendChild(p);
+      });
+    });
+
     function showMessage() {
       const name = document.getElementById('sender').value.trim();
       const msg = document.getElementById('message').value.trim();
@@ -182,33 +190,30 @@
         return;
       }
 
+      const fullMsg = `${name} says: “${msg}”`;
+
       // 页面显示留言
       const newMsg = document.createElement('p');
-      newMsg.textContent = `${name} says: “${msg}”`;
-      newMsg.style.color = '#333';
+      newMsg.textContent = fullMsg;
+      newMsg.style.color = colors[Math.floor(Math.random() * colors.length)];
       newMsg.style.fontSize = '18px';
       newMsg.style.margin = '6px 0';
       outputEl.appendChild(newMsg);
+
+      // 保存到 localStorage
+      let messages = JSON.parse(localStorage.getItem("messages") || "[]");
+      messages.push(fullMsg);
+      localStorage.setItem("messages", JSON.stringify(messages));
 
       // 弹幕效果
       const danmaku = document.createElement('div');
       danmaku.className = 'danmaku';
       danmaku.textContent = `${name}: ${msg}`;
+      danmaku.style.color = colors[Math.floor(Math.random() * colors.length)];
       const topOffset = Math.floor(Math.random() * 400) + 50;
       danmaku.style.setProperty('--top', topOffset + 'px');
       document.body.appendChild(danmaku);
       setTimeout(() => danmaku.remove(), 8000);
-
-      // 发送到邮箱
-      emailjs.send("bdtest", "testing1", {
-        sender_name: name,
-        message: msg
-      }).then(function(response) {
-        alert("✅ Message sent to your inbox!");
-      }, function(error) {
-        console.error("Email failed:", error);
-        alert("❌ Failed to send message.");
-      });
 
       document.getElementById('sender').value = '';
       document.getElementById('message').value = '';
@@ -217,4 +222,3 @@
 
 </body>
 </html>
-
