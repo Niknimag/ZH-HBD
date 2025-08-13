@@ -164,16 +164,27 @@
   <audio id="bgm" src="https://github.com/Niknimag/index.html/blob/main/September.mp3?raw=true" loop></audio>
 
   <!-- 留言互动区 -->
-  <h2>What's on your mind? 🤔💬</h2>
+  <h2>Leave your message 💬</h2>
+  <input id="sender" type="text" placeholder="Your name..." />
+  <br />
   <input id="message" type="text" placeholder="Type your thoughts here..." />
   <br />
   <button onclick="showMessage()">Send</button>
-  <p id="output"></p>
+  <div id="output"></div>
 
-<script>
+ <script>
   function showMessage() {
+    const name = document.getElementById('sender').value;
     const msg = document.getElementById('message').value;
     const outputEl = document.getElementById('output');
+
+    // 页面显示留言
+    const newMsg = document.createElement('p');
+    newMsg.textContent = `${name} says: “${msg}”`;
+    newMsg.style.color = '#333';
+    newMsg.style.fontSize = '18px';
+    newMsg.style.margin = '6px 0';
+    outputEl.appendChild(newMsg);
 
     // 创建弹幕元素
     const danmaku = document.createElement('div');
@@ -196,7 +207,20 @@
     outputEl.appendChild(newMsg);
 
     document.getElementById('message').value = '';
-  }
+
+    // 发送到邮箱
+      emailjs.send("bdtest", "testing1", {
+        sender_name: name,
+        message: msg
+      }).then(function(response) {
+        alert("✅ Message sent to your inbox!");
+      }, function(error) {
+        alert("❌ Failed to send message.");
+      });
+
+      document.getElementById('sender').value = '';
+      document.getElementById('message').value = '';
+    }
 </script>
 
 </body>
