@@ -188,8 +188,12 @@
 
     // 创建弹幕元素
     const danmaku = document.createElement('div');
-    danmaku.className = 'danmaku';
-    danmaku.textContent = msg;
+danmaku.className = 'danmaku';
+danmaku.textContent = `${name}: ${msg}`;
+const topOffset = Math.floor(Math.random() * 400) + 50;
+danmaku.style.setProperty('--top', topOffset + 'px');
+document.body.appendChild(danmaku);
+setTimeout(() => danmaku.remove(), 8000);
     
     // 随机高度并使用 CSS 变量控制 top
     const topOffset = Math.floor(Math.random() * 400) + 50; // 避免太顶或太底
