@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Birthday!</title>
+
   <style>
     body {
       background-color: #fff0f5;
@@ -67,59 +68,49 @@
       30% { opacity: 1; }
       100% { top: -10%; opacity: 0; }
     }
-.danmaku {
-  position: fixed;
-  top: 0;
-  left: 100%;
-  white-space: nowrap;
-  font-size: 22px;
-  font-weight: bold;
-  color: #ff69b4;
-  animation: danmakuMove 8s linear forwards;
-  z-index: 1000;
-}
 
-@keyframes danmakuMove {
-  0% { left: 100%; top: var(--top); opacity: 1; }
-  100% { left: -100%; top: var(--top); opacity: 0.3; }
-}
+    .danmaku {
+      position: fixed;
+      top: 0;
+      left: 100%;
+      white-space: nowrap;
+      font-size: 22px;
+      font-weight: bold;
+      color: #ff69b4;
+      animation: danmakuMove 8s linear forwards;
+      z-index: 1000;
+    }
 
+    @keyframes danmakuMove {
+      0% { left: 100%; top: var(--top); opacity: 1; }
+      100% { left: -100%; top: var(--top); opacity: 0.3; }
+    }
 
-    /* 图片动画样式 */
     .flash-photo {
-  display: block;
-  margin: 20px auto;
-  width: 250px; /* 自行调整大小 */
-  height: auto;
-  opacity: 0;
-  animation: flashTiny 2s ease-out forwards;
-  animation-delay: 1s;
-}
+      display: block;
+      margin: 20px auto;
+      width: 250px;
+      height: auto;
+      opacity: 0;
+      animation: flashTiny 2s ease-out forwards;
+      animation-delay: 1s;
+    }
 
     @keyframes flashTiny {
-      0% {
-        opacity: 0;
-        transform: scale(0.7);
-      }
-      40% {
-        opacity: 1;
-        transform:  scale(1.15);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1);
-      }
+      0% { opacity: 0; transform: scale(0.7); }
+      40% { opacity: 1; transform: scale(1.15); }
+      100% { opacity: 1; transform: scale(1); }
     }
   </style>
-  <!-- 引入 EmailJS 脚本 -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<!-- 初始化 EmailJS（使用你的 Public Key） -->
-  <script>
-  emailjs.init("PZQM-HDHh08bl5CUe");
-</script>
 
+  <!-- ✅ EmailJS 脚本和初始化 -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    emailjs.init("PZQM-HDHh08bl5CUe"); // ← 你的 Public Key
+  </script>
 </head>
 <body>
+
   <!-- 倒数显示 -->
   <h2>Countdown to Birthday 🕐</h2>
   <p id="countdown" style="font-size: 20px; color: #ff69b4;"></p>
@@ -163,9 +154,9 @@
   <h1>🎂 Happy Birthday 🎉<br>💖 Zhe Huang! 🥳</h1>
   <p>May all of happiness and fortune be with you 💗💰</p>
 
-   <!-- 图片闪现 -->
+  <!-- 图片闪现 -->
   <img src="images/36EFDFA5-472D-4492-BB4D-4BCCEEA8499F.jpeg" alt="Surprise" class="flash-photo">
-  
+
   <!-- 音乐播放按钮 -->
   <button onclick="document.getElementById('bgm').play()">🎵Song For Jeff🐰</button>
   <audio id="bgm" src="https://github.com/Niknimag/index.html/blob/main/September.mp3?raw=true" loop></audio>
@@ -179,49 +170,50 @@
   <button onclick="showMessage()">Send</button>
   <div id="output"></div>
 
-<script>
-  function showMessage() {
-    const name = document.getElementById('sender').value.trim();
-    const msg = document.getElementById('message').value.trim();
-    const outputEl = document.getElementById('output');
+  <script>
+    function showMessage() {
+      const name = document.getElementById('sender').value.trim();
+      const msg = document.getElementById('message').value.trim();
+      const outputEl = document.getElementById('output');
 
-    if (!name || !msg) {
-      alert("Please enter your name and message.");
-      return;
+      if (!name || !msg) {
+        alert("Please enter your name and message.");
+        return;
+      }
+
+      // 页面显示留言
+      const newMsg = document.createElement('p');
+      newMsg.textContent = `${name} says: “${msg}”`;
+      newMsg.style.color = '#333';
+      newMsg.style.fontSize = '18px';
+      newMsg.style.margin = '6px 0';
+      outputEl.appendChild(newMsg);
+
+      // 弹幕效果
+      const danmaku = document.createElement('div');
+      danmaku.className = 'danmaku';
+      danmaku.textContent = `${name}: ${msg}`;
+      const topOffset = Math.floor(Math.random() * 400) + 50;
+      danmaku.style.setProperty('--top', topOffset + 'px');
+      document.body.appendChild(danmaku);
+      setTimeout(() => danmaku.remove(), 8000);
+
+      // 发送到邮箱
+      emailjs.send("bdtest", "testing1", {
+        sender_name: name,
+        message: msg
+      }).then(function(response) {
+        alert("✅ Message sent to your inbox!");
+      }, function(error) {
+        console.error("Email failed:", error);
+        alert("❌ Failed to send message.");
+      });
+
+      document.getElementById('sender').value = '';
+      document.getElementById('message').value = '';
     }
+  </script>
 
-    // 页面显示留言
-    const newMsg = document.createElement('p');
-    newMsg.textContent = `${name} says: “${msg}”`;
-    newMsg.style.color = '#333';
-    newMsg.style.fontSize = '18px';
-    newMsg.style.margin = '6px 0';
-    outputEl.appendChild(newMsg);
-
-    // 弹幕效果
-    const danmaku = document.createElement('div');
-    danmaku.className = 'danmaku';
-    danmaku.textContent = `${name}: ${msg}`;
-    const topOffset = Math.floor(Math.random() * 400) + 50;
-    danmaku.style.setProperty('--top', topOffset + 'px');
-    document.body.appendChild(danmaku);
-    setTimeout(() => danmaku.remove(), 8000);
-
-   // 发送到邮箱
-    emailjs.send("bdtest", "testing1", {
-      sender_name: name,
-      message: msg
-    }).then(function(response) {
-      alert("✅ Message sent to your inbox!");
-    }, function(error) {
-      console.error("Email failed:", error);
-      alert("❌ Failed to send message.");
-    });
-
-    document.getElementById('sender').value = '';
-    document.getElementById('message').value = '';
-  }
-</script>
-  
 </body>
 </html>
+
