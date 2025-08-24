@@ -131,17 +131,20 @@
     const timer = setInterval(updateCountdown, 1000);
   </script>
 
-  <!-- 飘动心形动画 -->
-  <script>
-    setInterval(() => {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.textContent = "💖";
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 6000);
-    }, 800);
-  </script>
+  <!-- 飘动符号动画 -->
+<script>
+  setInterval(() => {
+    const symbols = ["💰", "🎂", "🪄", "💵"];
+    symbols.forEach(symbol => {
+      const float = document.createElement("div");
+      float.className = "heart";
+      float.style.left = Math.random() * 100 + "vw";
+      float.textContent = symbol;
+      document.body.appendChild(float);
+      setTimeout(() => float.remove(), 6000);
+    });
+  }, 800);
+</script>
 
   <!-- 标题与祝福语 -->
   <h1>🎂 Happy Birthday 🎉<br>💖 Zhe Huang! 🥳</h1>
